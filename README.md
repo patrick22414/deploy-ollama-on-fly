@@ -1,6 +1,6 @@
 # Deploy Ollama on Fly.io
 
-(Definitely did not create this to prepare for an interview.)
+> (Definitely did not create this to prepare for an interview.)
 
 This project demonstrates how to deploy Ollama (a local LLM server) on Fly.io using a two-app architecture:
 
@@ -73,4 +73,4 @@ Run with Docker Compose:
    docker compose up --build
    ```
 
-This will start both the Ollama server and the Flask API locally.
+This will start both the Ollama server and the Flask server locally.
