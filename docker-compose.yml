@@ -23,10 +23,8 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    post_start:
-      - command: ["/bin/ollama", "pull", "llama3.2:1b"]
     volumes:
-      - ollama-models:/root/.ollama
+      - ollama_models:/root/.ollama
 
 volumes:
-  ollama-models:
+  ollama_models:
