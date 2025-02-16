@@ -1,0 +1,32 @@
+name: flying-ollama
+
+services:
+  server:
+    image: flying-ollama-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "5002:5002"
+    depends_on:
+      model:
+        condition: service_started
+
+  model:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    post_start:
+      - command: ["/bin/ollama", "pull", "llama3.2:1b"]
+    volumes:
+      - ollama-models:/root/.ollama
+
+volumes:
+  ollama-models:
