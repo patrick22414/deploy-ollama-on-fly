@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kollama-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kollama-web
+  template:
+    metadata:
+      labels:
+        app: kollama-web
+    spec:
+      containers:
+      - name: web
+        image: flying-ollama-server
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5002
+        env:
+        - name: OLLAMA_URL
+          value: "http://kollama-model-service"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

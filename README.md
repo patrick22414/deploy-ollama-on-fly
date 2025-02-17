@@ -1,4 +1,4 @@
-# Deploy Ollama on Fly.io
+# Deploy Ollama on Fly.io or k8s
 
 > (Definitely did not create this to prepare for an interview.)
 
@@ -6,6 +6,8 @@ This project demonstrates how to deploy Ollama (a local LLM server) on Fly.io us
 
 1. `flying-ollama-model`: Runs the Ollama server
 2. `flying-ollama`: A Flask web service that communicates with the Ollama server
+
+On k8s, the names are `kollama` instead of `flying-ollama`
 
 ## Architecture
 
@@ -22,7 +24,7 @@ Run with Docker Compose:
 
 This will start both the Ollama server and the Flask server locally.
 
-## Deployment
+## Fly.io Deployment
 
 ### CI/CD Setup
 
@@ -48,6 +50,27 @@ To set this up:
      - `FLY_API_TOKEN` for the web service
 
 The deployments will now run automatically on every push to master.
+
+## Kubernetes Deployment
+
+To deploy the services on Kubernetes:
+
+1. Create the resources:
+   ```bash
+   kubectl apply -f k8s
+   ```
+
+1. Get the external IP of the web service:
+   ```bash
+   kubectl get service kollama-web-service
+   ```
+
+1. Tear everything down.
+   ```bash
+   kubectl delete -f k8s
+   ```
+
+The web service is exposed via LoadBalancer, while the model service remains internal to the cluster.
 
 ## Usage
 Example chat request:

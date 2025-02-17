@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kollama-model
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kollama-model
+  template:
+    metadata:
+      labels:
+        app: kollama-model
+    spec:
+      containers:
+      - name: ollama
+        image: ollama/ollama
+        ports:
+        - containerPort: 11434
+        volumeMounts:
+        - name: ollama-models
+          mountPath: /root/.ollama
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "4Gi"
+            cpu: "4"
+      volumes:
+      - name: ollama-models
+        persistentVolumeClaim:
+          claimName: kollama-models-pvc

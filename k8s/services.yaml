@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kollama-model-service
+spec:
+  selector:
+    app: kollama-model
+  ports:
+  - port: 11434
+    targetPort: 11434
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kollama-web-service
+spec:
+  selector:
+    app: kollama-web
+  ports:
+  - port: 80
+    targetPort: 5002
+  type: LoadBalancer
